@@ -7,4 +7,4 @@ import { authInterceptor } from './app/core/interceptors/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [provideHttpClient(withInterceptors([authInterceptor])), provideRouter(routes)],
-}).catch(console.error);
+});

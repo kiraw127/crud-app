@@ -1,11 +1,11 @@
-using CarRental.Api.Contracts;
+using CarRental.Api.Dtos;
 using CarRental.Api.Models;
 
 namespace CarRental.Api.Mappings;
 
 public static class ModelMappings
 {
-    public static CarResponse ToResponse(this Car car) => new(
+    public static CarResponseDto ToResponse(this Car car) => new(
         car.Id,
         car.Brand,
         car.Model,
@@ -18,7 +18,7 @@ public static class ModelMappings
         car.IsAvailable,
         car.Description);
 
-    public static RentalResponse ToResponse(this Rental rental) => new(
+    public static RentalResponseDto ToResponse(this Rental rental) => new(
         rental.Id,
         rental.CarId,
         rental.Car?.ToResponse(),
@@ -29,7 +29,7 @@ public static class ModelMappings
         rental.TotalPrice,
         rental.Status);
 
-    public static void Apply(this SaveCarRequest request, Car car)
+    public static void Apply(this SaveCarRequestDto request, Car car)
     {
         car.Brand = request.Brand.Trim();
         car.Model = request.Model.Trim();

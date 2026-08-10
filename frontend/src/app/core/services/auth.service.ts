@@ -36,10 +36,6 @@ export class AuthService {
   }
 
   private readSession(): Session | null {
-    try {
-      return JSON.parse(localStorage.getItem(this.storageKey) ?? 'null');
-    } catch {
-      return null;
-    }
+    return JSON.parse(localStorage.getItem(this.storageKey) ?? 'null');
   }
 }

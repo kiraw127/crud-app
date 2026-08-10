@@ -11,9 +11,6 @@
       <label>Дата начала<input type="date" [(ngModel)]="form.startDate" /></label>
       <label>Дата окончания<input type="date" [(ngModel)]="form.endDate" /></label>
     </div>
-    @if (error) {
-      <p class="error">{{ error }}</p>
-    }
     <button class="primary wide" type="button" (click)="submit()">Подтвердить аренду</button>
   </div>
 </div>

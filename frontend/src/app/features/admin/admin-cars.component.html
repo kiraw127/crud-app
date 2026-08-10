@@ -13,12 +13,16 @@
       <p>Редактируйте состав и параметры автопарка</p>
     </div>
     <div class="toolbar-actions">
-      <input [(ngModel)]="search" placeholder="Поиск автомобиля…" />
+      <input
+        [ngModel]="search"
+        (ngModelChange)="updateSearch($event)"
+        placeholder="Поиск автомобиля…"
+      />
       <button class="primary" type="button" (click)="createCar()">+ Добавить авто</button>
     </div>
   </div>
   <div class="grid">
-    @for (car of filteredCars; track car.id) {
+    @for (car of cars(); track car.id) {
       <app-car-card
         [car]="car"
         [adminMode]="true"

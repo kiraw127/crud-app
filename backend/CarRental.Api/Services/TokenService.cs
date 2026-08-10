@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CarRental.Api.Contracts;
+using CarRental.Api.Dtos;
 using CarRental.Api.Models;
 using CarRental.Api.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +10,7 @@ namespace CarRental.Api.Services;
 
 public class TokenService(IConfiguration configuration) : ITokenService
 {
-    public AuthResponse CreateToken(AppUser user)
+    public AuthResponseDto CreateToken(AppUser user)
     {
         var jwtKey = configuration["Jwt:Key"]
             ?? throw new InvalidOperationException("JWT key is not configured.");
@@ -26,7 +26,7 @@ public class TokenService(IConfiguration configuration) : ITokenService
             expires: DateTime.UtcNow.AddHours(12),
             signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256));
 
-        return new AuthResponse(
+        return new AuthResponseDto(
             new JwtSecurityTokenHandler().WriteToken(token),
             user.Name,
             user.Role);

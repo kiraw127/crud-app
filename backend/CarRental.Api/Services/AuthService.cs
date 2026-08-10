@@ -1,4 +1,4 @@
-using CarRental.Api.Contracts;
+using CarRental.Api.Dtos;
 using CarRental.Api.Data;
 using CarRental.Api.Exceptions;
 using CarRental.Api.Models;
@@ -12,7 +12,7 @@ public class AuthService(AppDbContext db, ITokenService tokenService) : IAuthSer
 {
     private readonly PasswordHasher<AppUser> passwordHasher = new();
 
-    public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+    public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request)
     {
         ValidateRegistration(request);
         var email = NormalizeEmail(request.Email);
@@ -35,7 +35,7 @@ public class AuthService(AppDbContext db, ITokenService tokenService) : IAuthSer
         return tokenService.CreateToken(user);
     }
 
-    public async Task<AuthResponse> LoginAsync(LoginRequest request)
+    public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request)
     {
         var email = NormalizeEmail(request.Email);
         var user = await db.Users.SingleOrDefaultAsync(item => item.Email == email);
@@ -55,7 +55,7 @@ public class AuthService(AppDbContext db, ITokenService tokenService) : IAuthSer
 
     private static string NormalizeEmail(string email) => email.Trim().ToLowerInvariant();
 
-    private static void ValidateRegistration(RegisterRequest request)
+    private static void ValidateRegistration(RegisterRequestDto request)
     {
         var email = NormalizeEmail(request.Email);
         if (string.IsNullOrWhiteSpace(request.Name)

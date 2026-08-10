@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Car } from '../../core/models/car.model';
@@ -15,27 +15,25 @@ import { BookingDialogComponent } from '../rentals/booking-dialog.component';
   templateUrl: './car-list.component.html',
 })
 export class CarListComponent {
-  private readonly carsService = inject(CarsService);
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
+  constructor(
+    private readonly carsService: CarsService,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+  ) {
+    this.loadCars();
+  }
 
   readonly cars = signal<Car[]>([]);
   readonly selectedCar = signal<Car | null>(null);
   search = '';
 
-  constructor() {
-    this.loadCars();
-  }
-
   get availableCount(): number {
     return this.cars().filter((car) => car.isAvailable).length;
   }
 
-  get filteredCars(): Car[] {
-    const query = this.search.trim().toLowerCase();
-    return this.cars().filter((car) =>
-      `${car.brand} ${car.model} ${car.category}`.toLowerCase().includes(query),
-    );
+  updateSearch(search: string): void {
+    this.search = search;
+    this.loadCars();
   }
 
   startBooking(car: Car): void {
@@ -52,6 +50,6 @@ export class CarListComponent {
   }
 
   private loadCars(): void {
-    this.carsService.getAll().subscribe((cars) => this.cars.set(cars));
+    this.carsService.getAll(this.search).subscribe((cars) => this.cars.set(cars));
   }
 }

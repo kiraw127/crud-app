@@ -1,4 +1,4 @@
-using CarRental.Api.Contracts;
+using CarRental.Api.Dtos;
 using CarRental.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,13 +8,13 @@ namespace CarRental.Api.Controllers;
 public class AuthController(IAuthService authService) : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<ActionResult<AuthResponse>> RegisterAsync(RegisterRequest request)
+    public async Task<ActionResult<AuthResponseDto>> RegisterAsync(RegisterRequestDto request)
     {
         return Ok(await authService.RegisterAsync(request));
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<AuthResponse>> LoginAsync(LoginRequest request)
+    public async Task<ActionResult<AuthResponseDto>> LoginAsync(LoginRequestDto request)
     {
         return Ok(await authService.LoginAsync(request));
     }

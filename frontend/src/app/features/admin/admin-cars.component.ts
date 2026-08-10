@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Car, SaveCarRequest, createEmptyCar } from '../../core/models/car.model';
 import { CarsService } from '../../core/services/cars.service';
@@ -12,25 +12,21 @@ import { HeroComponent } from '../../shared/components/hero/hero.component';
   templateUrl: './admin-cars.component.html',
 })
 export class AdminCarsComponent {
-  private readonly carsService = inject(CarsService);
+  constructor(private readonly carsService: CarsService) {
+    this.loadCars();
+  }
 
   readonly cars = signal<Car[]>([]);
   readonly editingCar = signal<Car | null>(null);
   search = '';
 
-  constructor() {
-    this.loadCars();
-  }
-
   get availableCount(): number {
     return this.cars().filter((car) => car.isAvailable).length;
   }
 
-  get filteredCars(): Car[] {
-    const query = this.search.trim().toLowerCase();
-    return this.cars().filter((car) =>
-      `${car.brand} ${car.model} ${car.category}`.toLowerCase().includes(query),
-    );
+  updateSearch(search: string): void {
+    this.search = search;
+    this.loadCars();
   }
 
   createCar(): void {
@@ -64,7 +60,7 @@ export class AdminCarsComponent {
   }
 
   private loadCars(): void {
-    this.carsService.getAll().subscribe((cars) => this.cars.set(cars));
+    this.carsService.getAll(this.search).subscribe((cars) => this.cars.set(cars));
   }
 
   private toSaveRequest(car: Car): SaveCarRequest {

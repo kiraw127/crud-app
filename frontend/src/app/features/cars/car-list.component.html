@@ -12,10 +12,14 @@
       <h2>Доступные автомобили</h2>
       <p>Выберите автомобиль для оформления аренды</p>
     </div>
-    <input [(ngModel)]="search" placeholder="Поиск автомобиля…" />
+    <input
+      [ngModel]="search"
+      (ngModelChange)="updateSearch($event)"
+      placeholder="Поиск автомобиля…"
+    />
   </div>
   <div class="grid">
-    @for (car of filteredCars; track car.id) {
+    @for (car of cars(); track car.id) {
       <app-car-card [car]="car" (rent)="startBooking($event)" />
     }
   </div>

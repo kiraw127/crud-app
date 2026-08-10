@@ -1,9 +1,9 @@
-using CarRental.Api.Contracts;
+using CarRental.Api.Dtos;
 
 namespace CarRental.Api.Services.Interfaces;
 
 public interface IAuthService
 {
-    Task<AuthResponse> RegisterAsync(RegisterRequest request);
-    Task<AuthResponse> LoginAsync(LoginRequest request);
+    Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request);
+    Task<AuthResponseDto> LoginAsync(LoginRequestDto request);
 }

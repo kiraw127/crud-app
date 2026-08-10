@@ -15,9 +15,6 @@
         >Пароль<input type="password" [(ngModel)]="form.password" placeholder="Минимум 6 символов"
       /></label>
     </div>
-    @if (error) {
-      <p class="error">{{ error }}</p>
-    }
     <button class="primary wide" type="button" (click)="submit()">
       {{ mode === 'login' ? 'Войти' : 'Зарегистрироваться' }}
     </button>

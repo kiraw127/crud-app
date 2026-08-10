@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CarRental.Api.Contracts;
+namespace CarRental.Api.Dtos;
 
-public record RegisterRequest(
+public record RegisterRequestDto(
     [Required] string Name,
     [Required, EmailAddress] string Email,
     [Required, MinLength(6)] string Password);
 
-public record LoginRequest(
+public record LoginRequestDto(
     [Required, EmailAddress] string Email,
     [Required] string Password);
 
-public record AuthResponse(string Token, string Name, string Role);
+public record AuthResponseDto(string Token, string Name, string Role);

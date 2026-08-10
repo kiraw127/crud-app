@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Car, SaveCarRequest } from '../models/car.model';
@@ -9,8 +9,9 @@ export class CarsService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/cars`;
 
-  getAll(): Observable<Car[]> {
-    return this.http.get<Car[]>(this.apiUrl);
+  getAll(search = ''): Observable<Car[]> {
+    const params = search ? new HttpParams().set('search', search) : undefined;
+    return this.http.get<Car[]>(this.apiUrl, { params });
   }
 
   create(request: SaveCarRequest): Observable<Car> {

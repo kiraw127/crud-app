@@ -1,4 +1,4 @@
-using CarRental.Api.Contracts;
+using CarRental.Api.Dtos;
 using CarRental.Api.Data;
 using CarRental.Api.Exceptions;
 using CarRental.Api.Mappings;
@@ -10,13 +10,13 @@ namespace CarRental.Api.Services;
 
 public class RentalService(AppDbContext db) : IRentalService
 {
-    public async Task<IReadOnlyList<RentalResponse>> GetAllAsync()
+    public async Task<IReadOnlyList<RentalResponseDto>> GetAllAsync()
     {
         var rentals = await RentalQuery().ToListAsync();
         return rentals.Select(rental => rental.ToResponse()).ToList();
     }
 
-    public async Task<IReadOnlyList<RentalResponse>> GetForUserAsync(string email)
+    public async Task<IReadOnlyList<RentalResponseDto>> GetForUserAsync(string email)
     {
         var user = await FindUserAsync(email);
         var rentals = await RentalQuery()
@@ -26,7 +26,7 @@ public class RentalService(AppDbContext db) : IRentalService
         return rentals.Select(rental => rental.ToResponse()).ToList();
     }
 
-    public async Task<RentalResponse> CreateAsync(string email, CreateRentalRequest request)
+    public async Task<RentalResponseDto> CreateAsync(string email, CreateRentalRequestDto request)
     {
         ValidateDates(request.StartDate, request.EndDate);
         var user = await FindUserAsync(email);
@@ -64,7 +64,7 @@ public class RentalService(AppDbContext db) : IRentalService
         return rental.ToResponse();
     }
 
-    public async Task UpdateAsync(int id, UpdateRentalRequest request)
+    public async Task UpdateAsync(int id, UpdateRentalRequestDto request)
     {
         ValidateDates(request.StartDate, request.EndDate);
         var rental = await db.Rentals.FindAsync(id)

@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CarRental.Api.Contracts;
+namespace CarRental.Api.Dtos;
 
-public record RentalResponse(
+public record RentalResponseDto(
     int Id,
     int CarId,
-    CarResponse? Car,
+    CarResponseDto? Car,
     string CustomerName,
     string Phone,
     DateOnly StartDate,
@@ -13,13 +13,13 @@ public record RentalResponse(
     decimal TotalPrice,
     string Status);
 
-public record CreateRentalRequest(
+public record CreateRentalRequestDto(
     [Range(1, int.MaxValue)] int CarId,
     [Required] string Phone,
     DateOnly StartDate,
     DateOnly EndDate);
 
-public record UpdateRentalRequest(
+public record UpdateRentalRequestDto(
     [Required] string Phone,
     DateOnly StartDate,
     DateOnly EndDate,

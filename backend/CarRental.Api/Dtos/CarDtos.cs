@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CarRental.Api.Contracts;
+namespace CarRental.Api.Dtos;
 
-public record CarResponse(
+public record CarResponseDto(
     int Id,
     string Brand,
     string Model,
@@ -15,7 +15,7 @@ public record CarResponse(
     bool IsAvailable,
     string? Description);
 
-public record SaveCarRequest(
+public record SaveCarRequestDto(
     [Required] string Brand,
     [Required] string Model,
     [Range(1900, 2100)] int Year,
@@ -25,3 +25,8 @@ public record SaveCarRequest(
     [Range(1, 20)] int Seats,
     [Required, Url] string ImageUrl,
     string? Description);
+
+public record CarQueryDto(
+    string? Search,
+    string? SortBy = null,
+    string? SortDirection = null);
