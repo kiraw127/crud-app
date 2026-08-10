@@ -22,7 +22,7 @@ export class AppComponent {
   readSession():Session|null{try{return JSON.parse(localStorage.getItem('rentauto_session')||'null')}catch{return null}}
   loadCars(){this.http.get<Car[]>(`${this.api}/cars`).subscribe(x=>this.cars.set(x))}
   loadRentals(){if(this.isAdmin())this.http.get<Rental[]>(`${this.api}/rentals`,{headers:this.headers()}).subscribe(x=>this.rentals.set(x))}
-  loadMyRentals(){if(this.session()&&!this.isAdmin())this.http.get<Rental[]>(`${this.api}/rentals/mine`,{headers:this.headers()}).subscribe(x=>this.myRentals.set(x))}
+  loadMyRentals(){if(this.session()&&!this.isAdmin())this.http.get<Rental[]>(`${this.api}/rentals/me`,{headers:this.headers()}).subscribe(x=>this.myRentals.set(x))}
   availableCount(){return this.cars().filter(x=>x.isAvailable).length}
   filteredCars(){const q=this.search.toLowerCase();return this.cars().filter(c=>(`${c.brand} ${c.model} ${c.category}`).toLowerCase().includes(q))}
 
@@ -38,6 +38,6 @@ export class AppComponent {
   deleteCar(c:Car){if(this.isAdmin()&&confirm(`Удалить ${c.brand} ${c.model}?`))this.http.delete(`${this.api}/cars/${c.id}`,{headers:this.headers()}).subscribe(()=>this.loadCars())}
   openRental(c:Car){if(!this.session()){this.openAuth('login');return}if(this.isAdmin())return;this.selectedCar.set(c);this.newRental={customerName:this.session()!.name,phone:'',startDate:new Date().toISOString().slice(0,10),endDate:'',status:'Активна'};this.modal.set('rental')}
   saveRental(){const c=this.selectedCar();if(!c||!this.newRental.customerName||!this.newRental.phone||!this.newRental.endDate)return;this.http.post(`${this.api}/rentals`,{...this.newRental,carId:c.id},{headers:this.headers()}).subscribe(()=>{this.modal.set('');this.loadCars();this.loadMyRentals();this.tab.set('mine')})}
-  deleteMyRental(r:Rental){if(confirm('Отменить аренду?'))this.http.delete(`${this.api}/rentals/mine/${r.id}`,{headers:this.headers()}).subscribe(()=>{this.loadMyRentals();this.loadCars()})}
+  deleteMyRental(r:Rental){if(confirm('Отменить аренду?'))this.http.delete(`${this.api}/rentals/me/${r.id}`,{headers:this.headers()}).subscribe(()=>{this.loadMyRentals();this.loadCars()})}
   deleteRental(r:Rental){if(this.isAdmin()&&confirm('Завершить и удалить аренду?'))this.http.delete(`${this.api}/rentals/${r.id}`,{headers:this.headers()}).subscribe(()=>{this.loadRentals();this.loadCars()})}
 }

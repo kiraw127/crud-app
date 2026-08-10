@@ -39,3 +39,11 @@ npm start
 ```bash
 docker compose down
 ```
+
+## Стандарты проекта
+
+- REST-маршруты используют существительные во множественном числе: `api/cars`, `api/rentals`.
+- Действия над текущим пользователем находятся по маршруту `api/rentals/me`.
+- HTTP-методы соответствуют операции: `GET` — чтение, `POST` — создание, `PUT` — обновление, `DELETE` — удаление.
+- Методы C# имеют явные имена и суффикс `Async` для асинхронных операций.
+- Сообщения коммитов следуют Conventional Commits, например: `feat(auth): add JWT login` или `fix(rentals): link booking to user`.
