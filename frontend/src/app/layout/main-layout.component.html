@@ -1,0 +1,29 @@
+<main>
+  <header>
+    <a class="brand" routerLink="/cars">
+      <span>R</span>
+      <div>RENT<span>AUTO</span><small>Сервис аренды автомобилей</small></div>
+    </a>
+
+    <nav>
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin/cars" routerLinkActive="active">Автопарк</a>
+        <a routerLink="/admin/rentals" routerLinkActive="active">Аренды</a>
+      } @else {
+        <a routerLink="/cars" routerLinkActive="active">Автомобили</a>
+        @if (auth.session()) {
+          <a routerLink="/my-rentals" routerLinkActive="active">Мои аренды</a>
+        }
+      }
+    </nav>
+
+    @if (auth.session()) {
+      <span class="user">{{ auth.session()?.name }}</span>
+      <button class="login-btn" type="button" (click)="logout()">Выйти</button>
+    } @else {
+      <a class="login-btn" routerLink="/login">Войти</a>
+    }
+  </header>
+
+  <router-outlet />
+</main>

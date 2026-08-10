@@ -8,12 +8,33 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Car> Cars => Set<Car>();
     public DbSet<Rental> Rentals => Set<Rental>();
     public DbSet<AppUser> Users => Set<AppUser>();
-    protected override void OnModelCreating(ModelBuilder b)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        b.Entity<Car>().Property(x => x.DailyRate).HasPrecision(12, 2);
-        b.Entity<Rental>().Property(x => x.TotalPrice).HasPrecision(12, 2);
-        b.Entity<AppUser>().HasIndex(x => x.Email).IsUnique();
-        b.Entity<Car>().HasData(
+        modelBuilder.Entity<Car>()
+            .Property(car => car.DailyRate)
+            .HasPrecision(12, 2);
+
+        modelBuilder.Entity<Rental>()
+            .Property(rental => rental.TotalPrice)
+            .HasPrecision(12, 2);
+
+        modelBuilder.Entity<Rental>()
+            .HasOne(rental => rental.Car)
+            .WithMany(car => car.Rentals)
+            .HasForeignKey(rental => rental.CarId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Rental>()
+            .HasOne(rental => rental.User)
+            .WithMany(user => user.Rentals)
+            .HasForeignKey(rental => rental.UserId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<AppUser>()
+            .HasIndex(user => user.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<Car>().HasData(
             new Car
             {
                 Id = 1,

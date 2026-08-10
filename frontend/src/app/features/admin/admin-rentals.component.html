@@ -1,0 +1,15 @@
+<section class="content">
+  <div class="toolbar">
+    <div>
+      <h2>Активные аренды</h2>
+      <p>Контроль текущих бронирований</p>
+    </div>
+  </div>
+  <div class="rentals">
+    @for (rental of rentals(); track rental.id) {
+      <app-rental-card [rental]="rental" [showCustomer]="true" (cancel)="finishRental($event)" />
+    } @empty {
+      <div class="empty">Нет активных аренд.</div>
+    }
+  </div>
+</section>

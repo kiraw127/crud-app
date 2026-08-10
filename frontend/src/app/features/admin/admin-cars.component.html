@@ -1,0 +1,55 @@
+<app-hero
+  eyebrow="ПАНЕЛЬ УПРАВЛЕНИЯ"
+  title="Управляйте автопарком и бронированиями."
+  subtitle="Добавляйте автомобили и контролируйте активные аренды."
+  [totalCars]="cars().length"
+  [availableCars]="availableCount"
+/>
+
+<section class="content">
+  <div class="toolbar">
+    <div>
+      <h2>Управление автопарком</h2>
+      <p>Редактируйте состав и параметры автопарка</p>
+    </div>
+    <div class="toolbar-actions">
+      <input [(ngModel)]="search" placeholder="Поиск автомобиля…" />
+      <button class="primary" type="button" (click)="createCar()">+ Добавить авто</button>
+    </div>
+  </div>
+  <div class="grid">
+    @for (car of filteredCars; track car.id) {
+      <app-car-card
+        [car]="car"
+        [adminMode]="true"
+        (edit)="editCar($event)"
+        (remove)="deleteCar($event)"
+      />
+    }
+  </div>
+</section>
+
+@if (editingCar(); as car) {
+  <div class="overlay">
+    <div class="modal">
+      <button class="close" type="button" (click)="editingCar.set(null)">×</button>
+      <h2>{{ car.id ? 'Редактировать автомобиль' : 'Новый автомобиль' }}</h2>
+      <div class="form two">
+        <label>Марка<input [(ngModel)]="car.brand" /></label>
+        <label>Модель<input [(ngModel)]="car.model" /></label>
+        <label>Год<input type="number" [(ngModel)]="car.year" /></label>
+        <label>Категория<input [(ngModel)]="car.category" /></label>
+        <label>Цена за сутки<input type="number" [(ngModel)]="car.dailyRate" /></label>
+        <label>Мест<input type="number" [(ngModel)]="car.seats" /></label>
+        <label
+          >Трансмиссия<select [(ngModel)]="car.transmission">
+            <option>Автомат</option>
+            <option>Механика</option>
+          </select></label
+        >
+        <label>Ссылка на фото<input [(ngModel)]="car.imageUrl" /></label>
+      </div>
+      <button class="primary wide" type="button" (click)="saveCar()">Сохранить автомобиль</button>
+    </div>
+  </div>
+}

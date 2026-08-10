@@ -1,0 +1,19 @@
+<div class="overlay">
+  <div class="modal">
+    <button class="close" type="button" (click)="closed.emit()">×</button>
+    <h2>Оформление аренды</h2>
+    <p class="muted">
+      {{ car().brand }} {{ car().model }} ·
+      {{ car().dailyRate | currency: 'KZT' : 'symbol-narrow' : '1.0-0' }}/сутки
+    </p>
+    <div class="form">
+      <label>Телефон<input [(ngModel)]="form.phone" placeholder="+7 700 000 00 00" /></label>
+      <label>Дата начала<input type="date" [(ngModel)]="form.startDate" /></label>
+      <label>Дата окончания<input type="date" [(ngModel)]="form.endDate" /></label>
+    </div>
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+    <button class="primary wide" type="button" (click)="submit()">Подтвердить аренду</button>
+  </div>
+</div>

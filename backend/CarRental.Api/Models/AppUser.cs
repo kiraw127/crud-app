@@ -1,6 +1,6 @@
-namespace CarRental.Api.Models;
-
 using System.Text.Json.Serialization;
+
+namespace CarRental.Api.Models;
 
 public class AppUser
 {
@@ -9,6 +9,7 @@ public class AppUser
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string Role { get; set; } = "Customer";
+
     [JsonIgnore]
     public ICollection<Rental> Rentals { get; set; } = new List<Rental>();
 }

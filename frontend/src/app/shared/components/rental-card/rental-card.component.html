@@ -1,0 +1,22 @@
+<article>
+  <div class="r-icon">{{ rental().car?.brand?.charAt(0) }}</div>
+  <div>
+    <h3>{{ rental().car?.brand }} {{ rental().car?.model }}</h3>
+    <p>
+      @if (showCustomer()) {
+        {{ rental().customerName }} · {{ rental().phone }}
+      } @else {
+        {{ rental().car?.year }} · {{ rental().car?.transmission }}
+      }
+    </p>
+  </div>
+  <div>
+    <small>Период аренды</small>
+    <p>{{ rental().startDate }} — {{ rental().endDate }}</p>
+  </div>
+  <strong>{{ rental().totalPrice | currency: 'KZT' : 'symbol-narrow' : '1.0-0' }}</strong>
+  <span class="status">{{ rental().status }}</span>
+  <button class="cancel-rental" type="button" (click)="cancel.emit(rental())">
+    {{ showCustomer() ? 'Завершить' : 'Отменить' }}
+  </button>
+</article>

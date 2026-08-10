@@ -1,24 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
-.role-switch {
-  background: #eff2ef;
-  border-radius: 8px;
-  padding: 3px;
-  display: flex;
-  gap: 2px;
-}
-.role-switch button {
-  padding: 7px 10px;
-  border-radius: 6px;
-  background: transparent;
-  color: #65706a;
-  font-size: 12px;
-  font-weight: 700;
-}
-.role-switch button.selected {
-  background: #fff;
-  color: #1b3027;
-  box-shadow: 0 1px 3px #13251b1c;
-}
 .admin-note {
   margin-top: 16px;
   text-align: center;
@@ -42,6 +22,7 @@
   background: #fff;
   color: #1b3027;
   font-weight: 700;
+  text-decoration: none;
 }
 .link {
   display: block;
@@ -94,6 +75,8 @@ header {
   align-items: center;
   gap: 9px;
   line-height: 18px;
+  color: inherit;
+  text-decoration: none;
 }
 .brand > span {
   background: #e1b34b;
@@ -126,13 +109,14 @@ button {
   border: 0;
   cursor: pointer;
 }
-nav button {
+nav a {
   background: none;
   color: #68716d;
   padding: 10px 14px;
   border-radius: 8px;
+  text-decoration: none;
 }
-nav button.active {
+nav a.active {
   background: #eff2ef;
   color: #15231d;
   font-weight: 700;
@@ -217,6 +201,11 @@ nav b {
   border-radius: 8px;
   padding: 12px 14px;
   width: 245px;
+}
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .grid {
   display: grid;
@@ -424,6 +413,16 @@ nav b {
 }
 .wide {
   width: 100%;
+}
+.auth-page {
+  min-height: calc(100vh - 82px);
+  display: grid;
+  place-items: center;
+  padding: 30px 20px;
+  background: #1b3027;
+}
+.auth-card {
+  position: relative;
 }
 @media (max-width: 780px) {
   header {

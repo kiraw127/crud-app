@@ -1,0 +1,30 @@
+<article class="car">
+  <div class="photo">
+    <img [src]="car().imageUrl" [alt]="car().brand" />
+    <i [class.off]="!car().isAvailable">
+      {{ car().isAvailable ? 'Доступен' : 'В аренде' }}
+    </i>
+  </div>
+  <div class="car-body">
+    <span class="category">{{ car().category }}</span>
+    <h3>{{ car().brand }} {{ car().model }}</h3>
+    <p>{{ car().year }} · {{ car().transmission }} · {{ car().seats }} мест</p>
+    <div class="price">
+      <strong>{{ car().dailyRate | currency: 'KZT' : 'symbol-narrow' : '1.0-0' }}</strong>
+      <span>/ сутки</span>
+      @if (adminMode()) {
+        <button class="icon" type="button" (click)="edit.emit(car())">✎</button>
+        <button class="icon danger" type="button" (click)="remove.emit(car())">×</button>
+      }
+    </div>
+    @if (adminMode()) {
+      <div class="admin-note">
+        {{ car().isAvailable ? 'Готов к бронированию' : 'Сейчас в аренде' }}
+      </div>
+    } @else {
+      <button class="rent" type="button" [disabled]="!car().isAvailable" (click)="rent.emit(car())">
+        {{ car().isAvailable ? 'Оформить аренду' : 'Недоступен' }}
+      </button>
+    }
+  </div>
+</article>

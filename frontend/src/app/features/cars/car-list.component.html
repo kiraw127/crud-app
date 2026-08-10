@@ -1,0 +1,26 @@
+<app-hero
+  eyebrow="ПРЕМИАЛЬНЫЙ СЕРВИС АРЕНДЫ"
+  title="Ваш путь начинается с правильного автомобиля."
+  subtitle="Выберите автомобиль — оформление займёт всего пару минут."
+  [totalCars]="cars().length"
+  [availableCars]="availableCount"
+/>
+
+<section class="content">
+  <div class="toolbar">
+    <div>
+      <h2>Доступные автомобили</h2>
+      <p>Выберите автомобиль для оформления аренды</p>
+    </div>
+    <input [(ngModel)]="search" placeholder="Поиск автомобиля…" />
+  </div>
+  <div class="grid">
+    @for (car of filteredCars; track car.id) {
+      <app-car-card [car]="car" (rent)="startBooking($event)" />
+    }
+  </div>
+</section>
+
+@if (selectedCar(); as car) {
+  <app-booking-dialog [car]="car" (closed)="selectedCar.set(null)" (booked)="completeBooking()" />
+}

@@ -1,6 +1,6 @@
-namespace CarRental.Api.Models;
-
 using System.Text.Json.Serialization;
+
+namespace CarRental.Api.Models;
 
 public class Car
 {
@@ -15,6 +15,7 @@ public class Car
     public string ImageUrl { get; set; } = string.Empty;
     public bool IsAvailable { get; set; } = true;
     public string? Description { get; set; }
+
     [JsonIgnore]
     public ICollection<Rental> Rentals { get; set; } = new List<Rental>();
 }
