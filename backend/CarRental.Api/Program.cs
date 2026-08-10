@@ -14,8 +14,11 @@ builder.Services.AddDbContext<AppDbContext>(o => o.UseNpgsql(builder.Configurati
 builder.Services.AddCors(o => o.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o => o.TokenValidationParameters = new()
 {
-    ValidateIssuerSigningKey = true, IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-    ValidateIssuer = false, ValidateAudience = false, ValidateLifetime = true
+    ValidateIssuerSigningKey = true,
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+    ValidateIssuer = false,
+    ValidateAudience = false,
+    ValidateLifetime = true
 });
 builder.Services.AddAuthorization();
 var app = builder.Build();

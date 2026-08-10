@@ -47,3 +47,17 @@ docker compose down
 - HTTP-методы соответствуют операции: `GET` — чтение, `POST` — создание, `PUT` — обновление, `DELETE` — удаление.
 - Методы C# имеют явные имена и суффикс `Async` для асинхронных операций.
 - Сообщения коммитов следуют Conventional Commits, например: `feat(auth): add JWT login` или `fix(rentals): link booking to user`.
+
+Проверка и автоматическое форматирование фронтенда:
+
+```bash
+cd frontend
+npm run format:check
+npm run format
+```
+
+Форматирование C# выполняется из папки API:
+
+```bash
+dotnet format
+```

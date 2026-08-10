@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CarRental.Api.Controllers;
+
 [ApiController, Route("api/cars")]
 public class CarsController(AppDbContext db) : ControllerBase
 {

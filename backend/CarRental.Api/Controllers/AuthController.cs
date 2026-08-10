@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CarRental.Api.Controllers;
+
 [ApiController, Route("api/auth")]
 public class AuthController(AppDbContext db, IConfiguration config) : ControllerBase
 {
@@ -40,7 +41,16 @@ public class AuthController(AppDbContext db, IConfiguration config) : Controller
     private AuthResponse CreateResponse(AppUser user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!));
-        var token = new JwtSecurityToken(claims: [new(ClaimTypes.Name, user.Name), new(ClaimTypes.Email, user.Email), new(ClaimTypes.Role, user.Role)], expires: DateTime.UtcNow.AddHours(12), signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Name, user.Name),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(12),
+            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
         return new(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Role);
     }
 }
